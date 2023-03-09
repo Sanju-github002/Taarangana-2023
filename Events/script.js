@@ -65,6 +65,72 @@ const eventReg = {
     'Knights of the fall':'https://docs.google.com/forms/d/e/1FAIpQLSd-sniJldi6kp6pL2vetAdih0WPeEJhwe12bgWhawdGyeLDHQ/viewform?usp=sf_link' 
 };
 
+const overlay = document.getElementById("overlay");
+const card = document.getElementById("card");
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const closeButton = document.getElementById("closeButton");
+// let popupButton = document.getElementById("popup-button");
+let bodyContainer = document.getElementById("body-container");
+let containerr = document.getElementById("containerr");
+
+
+// const blur = document.getElementById('blur');
+
+// blur.addEventListener('click', () => {
+//   const overlay = document.querySelectorAll('.overlay.active')
+//   overlay.forEach(overlay => {
+//     closeButton(overlay)
+//   })
+// })
+
+for (let i = 0; i < 9; i++) {
+  const button = document.getElementById("button" + (i + 1));
+  
+  button.addEventListener("click", function() {
+    overlay.style.display = "block";
+    card.style.display="block";
+    title.innerHTML = eventsNames[i];
+    text.innerHTML = texts[i];
+    bodyContainer.classList.add("blur");
+    containerr.classList.add("blur");
+
+    
+  });
+
+
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    text.style.fontSize = "12px";
+    title.style.fontSize="26px";
+  } else {
+    text.style.fontSize = "22px";
+  }
+  
+  // function setCardContainerSize() {
+  //   if (window.matchMedia("(max-width: 767px)").matches) {
+  //     card.style.width = '100%';
+  //     card.style.height = '200px';
+  //   } else {
+  //     card.style.width = '80%';
+  //     card.style.height = '300px';
+  //   }
+  // }
+  // setCardContainerSize();
+  // window.addEventListener('resize', setCardContainerSize);
+
+
+
+
+
+}
+
+closeButton.addEventListener("click", function() {
+  overlay.style.display = "none";
+  bodyContainer.classList.remove("blur");
+  containerr.classList.remove("blur");
+
+}
+);
 
 const eventsContainer = document.getElementsByClassName("events-container")[0];
 
