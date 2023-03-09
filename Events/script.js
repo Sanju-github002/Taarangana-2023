@@ -70,81 +70,8 @@ for (let i = 0; i < 9; i++) {
     
   });
 
- function openAllEvents(type) {
-    document.getElementById('event-details').style.display = 'flex';
-    document.getElementsByClassName('event-type')[0].innerHTML = type;
-    document.getElementById("event-desc").innerHTML = eventDesc[type] 
-    document.getElementById("event-reg").href = eventReg[type]
-    setTimeout(() => {
-        document.getElementById('event-details').style.opacity = 1;
-    }, 10);
+ 
 
-    document.getElementsByClassName('all-events')[0].innerHTML = '';
-
-    const eventNames = [];
-    
-    ALL_EVENTS.map(event => {
-        if (event.category_name == type) {
-            event.events.map(eve => {
-                eventNames.push(eve.name);
-            });
-        }
-        if (type == 'Miscellaneous') {
-            if (event.category_name == 'Entertainment') {
-                event.events.map(eve => {
-                    eventNames.push(eve.name);
-                });
-            }
-            if (event.category_name == 'Writing') {
-                event.events.map(eve => {
-                    eventNames.push(eve.name);
-                });
-            }
-        }
-    });
-    
-    let expSet = false;
-    let tripSet  = false;
-    eventNames.map(eventName => {
-        if (!eventName.includes('Exposure') && !eventName.includes('TRIPPED: A VR Gaming Event')) {
-            const event = document.createElement('div');
-            const eventText = document.createElement('span');
-            eventText.innerHTML = eventName;
-            event.className = 'event';
-            event.appendChild(eventText);
-            document.getElementsByClassName('all-events')[0].appendChild(event);
-            eventText.addEventListener('click', () => viewEventDetails(eventName, type));
-        } else {
-            console.log(eventName, expSet)
-            if (eventName.includes('Exposure')) {
-                if (!expSet) {
-                    expSet = true;
-                    const event = document.createElement('div');
-                    const eventText = document.createElement('span');
-                    eventText.innerHTML = eventName;
-                    event.className = 'event';
-                    event.appendChild(eventText);
-                    document.getElementsByClassName('all-events')[0].appendChild(event);
-                    eventText.addEventListener('click', () => viewEventDetails(eventName, type));
-                }
-            }
-            if (eventName.includes('TRIPPED: A VR Gaming Event')) {
-                if (!tripSet) {
-                    tripSet = true;
-                    const event = document.createElement('div');
-                    const eventText = document.createElement('span');
-                    eventText.innerHTML = eventName;
-                    event.className = 'event';
-                    event.appendChild(eventText);
-                    document.getElementsByClassName('all-events')[0].appendChild(event);
-                    eventText.addEventListener('click', () => viewEventDetails(eventName, type));
-                }
-            }
-        }
-    });
-}
-
-  
   
   if (window.matchMedia("(max-width: 760px)").matches) {
     text.style.fontSize = "12px";
