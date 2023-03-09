@@ -24,6 +24,19 @@ const texts = [
   "“Dance is a pulse, a heartbeat, breathing. It’s the rhythm of your life. It’s the expression, in time and movement, of happiness, joy, sadness, and envy.“<br><br>Urban Thump is a group dance competition for those teams who enjoy swaying to the beats and falling in love with the stage every time. Showcase an escapade, undulate your body, and let the dancer in you reach out. Join us if your team has got those elegant yet fierce wacks and punks."
 ];
 
+const eventReg = {
+    'Mr and Ms Taarangana':'https://forms.gle/KPfK2as15LSVbBz9A',
+    'Rangmanch':'https://forms.gle/TVhRkdy61hYey7FZ8',
+    'Aaghaz':'https://forms.gle/zMqRs9Gk8qnnKwAK8',
+    'Rap Battle':'https://docs.google.com/forms/d/e/1FAIpQLScu5BEWZf6UzGFTJEI77ywX-5LTl03IBFL0HElmjnsDePEI1g/viewform?usp=sf_link',
+    'Group Singing-Antra':'https://forms.gle/3o2Yorc2i1HhnP2c8',
+    'Urban Thump':'https://forms.gle/PLtduUDHwmfcLSVPA',
+    'Solo Singing-Anhad':'https://docs.google.com/forms/d/e/1FAIpQLScd6uE5BhxzTHC39ZNJymNcFviXKpTkva_N1nxf3yG4gGz0bA/viewform?usp=sf_link',
+    'Lilac Dreams':'https://docs.google.com/forms/d/1CgYH64GaLk3CKpkPL8kt7yNPrjT1aaO7RvsVaCzpJEk/edit',
+    'Slam Poetry':'https://forms.gle/HMTvyfr7sRqvhW4P7',
+    'Knights of the fall':'https://docs.google.com/forms/d/e/1FAIpQLSd-sniJldi6kp6pL2vetAdih0WPeEJhwe12bgWhawdGyeLDHQ/viewform?usp=sf_link' 
+};
+
 const overlay = document.getElementById("overlay");
 const card = document.getElementById("card");
 const title = document.getElementById("title");
@@ -57,7 +70,82 @@ for (let i = 0; i < 9; i++) {
     
   });
 
+ function openAllEvents(type) {
+    document.getElementById('event-details').style.display = 'flex';
+    document.getElementsByClassName('event-type')[0].innerHTML = type;
+    document.getElementById("event-desc").innerHTML = eventDesc[type] 
+    document.getElementById("event-reg").href = eventReg[type]
+    setTimeout(() => {
+        document.getElementById('event-details').style.opacity = 1;
+    }, 10);
 
+    document.getElementsByClassName('all-events')[0].innerHTML = '';
+
+    const eventNames = [];
+    
+    ALL_EVENTS.map(event => {
+        if (event.category_name == type) {
+            event.events.map(eve => {
+                eventNames.push(eve.name);
+            });
+        }
+        if (type == 'Miscellaneous') {
+            if (event.category_name == 'Entertainment') {
+                event.events.map(eve => {
+                    eventNames.push(eve.name);
+                });
+            }
+            if (event.category_name == 'Writing') {
+                event.events.map(eve => {
+                    eventNames.push(eve.name);
+                });
+            }
+        }
+    });
+    
+    let expSet = false;
+    let tripSet  = false;
+    eventNames.map(eventName => {
+        if (!eventName.includes('Exposure') && !eventName.includes('TRIPPED: A VR Gaming Event')) {
+            const event = document.createElement('div');
+            const eventText = document.createElement('span');
+            eventText.innerHTML = eventName;
+            event.className = 'event';
+            event.appendChild(eventText);
+            document.getElementsByClassName('all-events')[0].appendChild(event);
+            eventText.addEventListener('click', () => viewEventDetails(eventName, type));
+        } else {
+            console.log(eventName, expSet)
+            if (eventName.includes('Exposure')) {
+                if (!expSet) {
+                    expSet = true;
+                    const event = document.createElement('div');
+                    const eventText = document.createElement('span');
+                    eventText.innerHTML = eventName;
+                    event.className = 'event';
+                    event.appendChild(eventText);
+                    document.getElementsByClassName('all-events')[0].appendChild(event);
+                    eventText.addEventListener('click', () => viewEventDetails(eventName, type));
+                }
+            }
+            if (eventName.includes('TRIPPED: A VR Gaming Event')) {
+                if (!tripSet) {
+                    tripSet = true;
+                    const event = document.createElement('div');
+                    const eventText = document.createElement('span');
+                    eventText.innerHTML = eventName;
+                    event.className = 'event';
+                    event.appendChild(eventText);
+                    document.getElementsByClassName('all-events')[0].appendChild(event);
+                    eventText.addEventListener('click', () => viewEventDetails(eventName, type));
+                }
+            }
+        }
+    });
+}
+
+  
+  
   if (window.matchMedia("(max-width: 760px)").matches) {
     text.style.fontSize = "12px";
     title.style.fontSize="26px";
